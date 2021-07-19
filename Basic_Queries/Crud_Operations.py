@@ -127,6 +127,34 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def insert(self):
+        '''
+        Description:
+            This function used to insert values into student and employee table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE ARUN")
+
+            student_sql_query = "INSERT INTO student(id,name) VALUES(01, 'arun')"
+
+            employee_sql_query = "INSERT INTO employee (id, name, salary) VALUES (01, 'Ranjith', 10000)"
+
+            self.db_cursor.execute(student_sql_query)
+
+            self.db_cursor.execute(employee_sql_query)
+
+            self.db_connection.commit()
+
+            logger.info(self.db_cursor.rowcount)
+            logger.info("Record Inserted")
+        
+        except Exception as e:
+            logger.error(e)
+
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -134,3 +162,4 @@ if __name__ == "__main__":
     crud.create_table()
     crud.alter()
     crud.emp_table()
+    crud.insert()
