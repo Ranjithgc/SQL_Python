@@ -251,6 +251,23 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def delete(self):
+        '''
+        Description:
+            This function delete a row in a table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("DELETE FROM employee WHERE ID = 5")
+            self.db_connection.commit()
+            logger.info(self.db_cursor.rowcount)
+            logger.info("Record Deleted")
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -263,3 +280,4 @@ if __name__ == "__main__":
     crud.select()
     crud.where()
     crud.update()
+    crud.delete()
