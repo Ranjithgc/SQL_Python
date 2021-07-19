@@ -7,7 +7,6 @@
 """
 
 import os
-from re import escape
 import mysql.connector
 from dotenv import load_dotenv
 from loggers import logger
@@ -90,9 +89,26 @@ class CrudOperation:
 
         except Exception as e:
             logger.error(e)
+    
+    def alter(self):
+        '''
+        Description:
+            This function adds the constraint primary key to Id.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE ARUN")
+
+            self.db_cursor.execute("ALTER TABLE student MODIFY id INT PRIMARY KEY")
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
     crud.create_db()
     crud.create_table()
+    crud.alter()
