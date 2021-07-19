@@ -187,6 +187,30 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def select(self):
+        '''
+        Description:
+            This function Display the data of the table.
+        Parameter:
+            it takes self as parameter.
+        '''
+        try:
+            self.db_cursor.execute("SELECT *FROM student")
+
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute("SELECT *FROM employee")
+
+            result2 = self.db_cursor.fetchall()
+
+            for x1 in result2:
+                logger.info(x1)
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     crud = CrudOperation()
@@ -197,3 +221,4 @@ if __name__ == "__main__":
     crud.emp_table()
     crud.insert()
     crud.insert_many()
+    crud.select()
