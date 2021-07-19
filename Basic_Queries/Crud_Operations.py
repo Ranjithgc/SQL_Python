@@ -267,6 +267,28 @@ class CrudOperation:
         
         except Exception as e:
             logger.error(e)
+    
+    def orderby(self):
+        '''
+        Description:
+            This function sorts the row.
+        Parameter:
+            it takes self as parameter. 
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT *FROM student ORDER BY NAME")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+            self.db_cursor.execute("SELECT *FROM employee ORDER BY SALARY DESC")
+            result1 = self.db_cursor.fetchall()
+            for x1 in result1:
+                logger.info(x1)
+        
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     crud = CrudOperation()
@@ -281,3 +303,4 @@ if __name__ == "__main__":
     crud.where()
     crud.update()
     crud.delete()
+    crud.orderby()
