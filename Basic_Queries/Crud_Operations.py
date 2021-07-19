@@ -340,7 +340,39 @@ class CrudOperation:
             
         except Exception as e:
             logger.error(e)
-    
+
+    def aggregate_functions(self):
+        '''
+        Description:
+            This function arrange identical data into groups and give condition by using having clause .
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT SUM(SALARY) FROM employee")
+            result = self.db_cursor.fetchall()
+            logger.info(result)
+            
+            self.db_cursor.execute("SELECT MAX(SALARY) FROM employee")
+            result1 = self.db_cursor.fetchall()
+            logger.info(result1)
+
+            self.db_cursor.execute("SELECT MIN(SALARY) FROM employee")
+            result1 = self.db_cursor.fetchall()
+            logger.info(result1)
+
+            self.db_cursor.execute("SELECT AVG(SALARY) FROM employee")
+            result1 = self.db_cursor.fetchall()
+            logger.info(result1)
+
+            self.db_cursor.execute("SELECT COUNT(SALARY) FROM employee")
+            result1 = self.db_cursor.fetchall()
+            logger.info(result1)
+
+        except Exception as e:
+            logger.error(e)
+        
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -358,3 +390,4 @@ if __name__ == "__main__":
     crud.groupby()
     crud.limit()
     crud.distinct()
+    crud.aggregate_functions()
