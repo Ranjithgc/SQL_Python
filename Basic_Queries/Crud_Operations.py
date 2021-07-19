@@ -106,9 +106,31 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def emp_table(self):
+        '''
+        Description:
+            This function creates employee table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE ARUN")
+
+            self.db_cursor.execute("CREATE TABLE employee(id INT PRIMARY KEY, name VARCHAR(255), salary INT(6))")
+
+            self.db_cursor.execute("SHOW TABLES")
+        
+            for table in self.db_cursor:
+	            logger.info(table)
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
     crud.create_db()
     crud.create_table()
     crud.alter()
+    crud.emp_table()
