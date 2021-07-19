@@ -7,6 +7,7 @@
 """
 
 import os
+from re import escape
 import mysql.connector
 from dotenv import load_dotenv
 from loggers import logger
@@ -69,7 +70,29 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def create_table(self):
+        '''
+        Description:
+            This function creates a table and display table.
+        Parameter:
+            it takes self as parameter.
+        '''
+        
+        try:
+            self.db_cursor.execute("USE ARUN")
+
+            self.db_cursor.execute("CREATE TABLE student (id INT, name VARCHAR(25))")
+
+            self.db_cursor.execute("SHOW TABLES")
+
+            for table in self.db_cursor:
+	            logger.info(table)
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
-    c = CrudOperation()
-    c.print_connection()
-    c.create_db()
+    crud = CrudOperation()
+    crud.print_connection()
+    crud.create_db()
+    crud.create_table()
