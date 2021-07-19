@@ -306,6 +306,23 @@ class CrudOperation:
             
         except Exception as e:
             logger.error(e)
+    
+    def limit(self):
+        '''
+        Description: 
+            This function display the rows by using limit.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT *FROM student LIMIT 2")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     crud = CrudOperation()
@@ -322,3 +339,4 @@ if __name__ == "__main__":
     crud.delete()
     crud.orderby()
     crud.groupby()
+    crud.limit()
