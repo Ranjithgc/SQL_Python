@@ -222,11 +222,14 @@ class CrudOperation:
 
         try:
             self.db_cursor.execute("SELECT *FROM student WHERE ID = 2")
-
             result = self.db_cursor.fetchall()
-            
             for x in result:
                 logger.info(x)
+            
+            self.db_cursor.execute("SELECT *FROM employee WHERE ID = 3 AND SALARY > 10000")
+            result1 = self.db_cursor.fetchall()
+            for x1 in result1:
+                logger.info(x1)
 
         except Exception as e:
             logger.error(e)
