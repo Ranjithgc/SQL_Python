@@ -290,6 +290,23 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def groupby(self):
+        '''
+        Description:
+            This function arrange identical data into groups.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT NAME, SUM(SALARY) FROM employee GROUP BY NAME")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -304,3 +321,4 @@ if __name__ == "__main__":
     crud.update()
     crud.delete()
     crud.orderby()
+    crud.groupby()
