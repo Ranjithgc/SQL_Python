@@ -28,6 +28,7 @@ class CrudOperation:
             passwd=os.environ.get("passwd"),
             auth_plugin=os.environ.get("auth_plugin")
         )
+        self.db_cursor = self.db_connection.cursor()
 
     def print_connection(self):
         '''
@@ -36,11 +37,39 @@ class CrudOperation:
         Parameter:
             it takes self as parameter.
         '''
+        
         try:
             logger.info(self.db_connection)
+        
+        except Exception as e:
+            logger.error(e)
+
+    def create_db(self):
+        '''
+        Description:
+            This function creates database, display, and drop database.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("CREATE DATABASE ARUN")
+            self.db_cursor.execute("CREATE DATABASE RAN")
+            self.db_cursor.execute("SHOW DATABASES")
+
+            for db in self.db_cursor:
+                logger.info(db)
+
+            self.db_cursor.execute("DROP DATABASE RAN")
+            self.db_cursor.execute("SHOW DATABASES")
+
+            for db in self.db_cursor:
+                logger.info(db)
+        
         except Exception as e:
             logger.error(e)
 
 if __name__ == "__main__":
     c = CrudOperation()
     c.print_connection()
+    c.create_db()
