@@ -212,6 +212,25 @@ class CrudOperation:
         except Exception as e:
             logger.error(e)
 
+    def where(self):
+        '''
+        Description:
+            This function checks where conditions and returns the row.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT *FROM student WHERE ID = 2")
+
+            result = self.db_cursor.fetchall()
+            
+            for x in result:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -222,3 +241,4 @@ if __name__ == "__main__":
     crud.insert()
     crud.insert_many()
     crud.select()
+    crud.where()
