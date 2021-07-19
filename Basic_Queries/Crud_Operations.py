@@ -138,13 +138,46 @@ class CrudOperation:
         try:
             self.db_cursor.execute("USE ARUN")
 
-            student_sql_query = "INSERT INTO student(id,name) VALUES(01, 'arun')"
+            student_sql_query = "INSERT INTO student(id,name) VALUES(1, 'arun')"
 
-            employee_sql_query = "INSERT INTO employee (id, name, salary) VALUES (01, 'Ranjith', 10000)"
+            employee_sql_query = "INSERT INTO employee (id, name, salary) VALUES (1, 'Ranjith', 10000)"
 
             self.db_cursor.execute(student_sql_query)
 
             self.db_cursor.execute(employee_sql_query)
+
+            self.db_connection.commit()
+
+            logger.info(self.db_cursor.rowcount)
+            logger.info("Record Inserted")
+        
+        except Exception as e:
+            logger.error(e)
+
+    def insert_many(self):
+        '''
+        Description:
+            This function used to insert values into student and employee table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            sql = "INSERT INTO student(id, name) VALUES(%s, %s)"
+            val = [(2, 'Ranjith'),
+                    (3, 'Lohith'),
+                    (4, 'Vinay'),
+                    (5, 'Vinayak')]
+
+            self.db_cursor.executemany(sql, val)
+
+            sql2 = "INSERT INTO employee (id, name, salary) VALUES(%s, %s, %s)"
+            val2 = [(2, 'arun', 20000),
+                    (3, 'Ashok', 15000),
+                    (4, 'Rahul', 22000),
+                (5, 'Yash', 12000)]
+
+            self.db_cursor.executemany(sql2, val2)
 
             self.db_connection.commit()
 
@@ -163,3 +196,4 @@ if __name__ == "__main__":
     crud.alter()
     crud.emp_table()
     crud.insert()
+    crud.insert_many()
