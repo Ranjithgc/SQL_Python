@@ -167,7 +167,7 @@ class CrudOperation:
             val = [(2, 'Ranjith'),
                     (3, 'Lohith'),
                     (4, 'Vinay'),
-                    (5, 'Vinayak')]
+                    (5, 'Vinay')]
 
             self.db_cursor.executemany(sql, val)
 
@@ -323,7 +323,24 @@ class CrudOperation:
             
         except Exception as e:
             logger.error(e)
+    
+    def distinct(self):
+        '''
+        Description:
+            This function deletes duplicate records from table.
+        Parameter:
+            it takes self as parameter.
+        '''
 
+        try:
+            self.db_cursor.execute("SELECT DISTINCT NAME FROM student")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+        except Exception as e:
+            logger.error(e)
+    
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -340,3 +357,4 @@ if __name__ == "__main__":
     crud.orderby()
     crud.groupby()
     crud.limit()
+    crud.distinct()
