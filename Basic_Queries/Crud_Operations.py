@@ -372,7 +372,43 @@ class CrudOperation:
 
         except Exception as e:
             logger.error(e)
-        
+    
+    def like(self):
+        '''
+        Description:
+            This function uses for pattern matching by using like operator.
+        Parameter:
+            it takes self as parameter.
+        '''
+        try:
+            self.db_cursor.execute("SELECT *FROM student WHERE NAME LIKE 'V%'")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute("SELECT *FROM student WHERE NAME LIKE '%h'")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+            self.db_cursor.execute("SELECT *FROM employee WHERE NAME LIKE '_a%'")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+            self.db_cursor.execute("SELECT *FROM employee WHERE SALARY LIKE '2_%_%'")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute("SELECT *FROM employee WHERE SALARY LIKE '_00%'")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+                
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     crud = CrudOperation()
     crud.print_connection()
@@ -391,3 +427,4 @@ if __name__ == "__main__":
     crud.limit()
     crud.distinct()
     crud.aggregate_functions()
+    crud.like()
