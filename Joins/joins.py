@@ -148,6 +148,33 @@ class Joins:
         except Exception as e:
             logger.error(e)
 
+    def cross_join(self):
+        '''
+        Description:
+            This function performs CROSS JOIN.
+        Parameter:
+            it takes self as paramter.
+        '''
+        
+        try:
+            self.db_cursor.execute('''SELECT ORDERS.OID, CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    CROSS JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID''')
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    CROSS JOIN ORDERS''')
+            result1 = self.db_cursor.fetchall()
+
+            for x1 in result1:
+                logger.info(x1)
+        
+        except Exception as e:
+            logger.error(e)
+
+
 if __name__ == "__main__":
     join = Joins()
     join.print_connection()
@@ -155,3 +182,4 @@ if __name__ == "__main__":
     join.innerjoin()
     join.left_join()
     join.right_join()
+    join.cross_join()
