@@ -94,6 +94,21 @@ class Views:
         
         except Exception as e:
             logger.error(e)
+    
+    def drop_view(self):
+        '''
+        Description:
+            This function drops a view.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("DROP VIEW address")
+            logger.info("View Dropped")
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     view = Views()
@@ -101,3 +116,4 @@ if __name__ == "__main__":
     view.create_view()
     view.display_view()
     view.update_view()
+    view.drop_view()
