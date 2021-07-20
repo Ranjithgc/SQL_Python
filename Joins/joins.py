@@ -193,6 +193,25 @@ class Joins:
         except Exception as e:
             logger.error(e)
 
+    def equi_join(self):
+        '''
+        Description:
+            This function performs EQUI JOIN.
+        Parameter:
+            it takes self as paramter.
+        '''
+        
+        try:
+            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS JOIN ORDERS  
+                                    WHERE CUSTOMERS.ID = ORDERS.CUSTOMER_ID''')
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     join = Joins()
     join.print_connection()
@@ -202,3 +221,4 @@ if __name__ == "__main__":
     join.right_join()
     join.cross_join()
     join.self_join()
+    join.equi_join()
