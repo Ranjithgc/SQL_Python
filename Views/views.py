@@ -55,8 +55,42 @@ class Views:
         try:
             self.db_cursor.execute("USE RANJITH")
             self.db_cursor.execute('''CREATE VIEW address AS
-                    SELECT NAME, ADDRESS, AGE FROM CUSTOMERS''')
+                    SELECT NAME, ADDRESS FROM CUSTOMERS''')
             logger.info("View created")
+        
+        except Exception as e:
+            logger.error(e)
+    
+    def display_view(self):
+        '''
+        Description:
+            This function displays the view.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT *FROM address")
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+        
+        except Exception as e:
+            logger.error(e)
+
+    def update_view(self):
+        '''
+        Description:
+            This function updates the view.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute('''ALTER VIEW address AS SELECT 
+                    NAME, ADDRESS, AGE FROM CUSTOMERS''')
+            logger.info("View Updated")
         
         except Exception as e:
             logger.error(e)
@@ -65,3 +99,5 @@ if __name__ == "__main__":
     view = Views()
     view.print_connection()
     view.create_view()
+    view.display_view()
+    view.update_view()
