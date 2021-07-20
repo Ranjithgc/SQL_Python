@@ -99,7 +99,7 @@ class Joins:
     def left_join(self):
         '''
         Description:
-            This function performs INNER JOIN.
+            This function performs LEFT JOIN.
         Parameter:
             it takes self as paramter.
         '''
@@ -119,7 +119,32 @@ class Joins:
             for x1 in result1:
                 logger.info(x1)
 
+        except Exception as e:
+            logger.error(e)
 
+    def right_join(self):
+        '''
+        Description:
+            This function performs RIGHT JOIN.
+        Parameter:
+            it takes self as paramter.
+        '''
+        
+        try:
+            self.db_cursor.execute('''SELECT ORDERS.OID, CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    RIGHT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID''')
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    RIGHT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID WHERE AMOUNT>2500 AND AMOUNT<5000''')
+            result1 = self.db_cursor.fetchall()
+
+            for x1 in result1:
+                logger.info(x1)
+        
         except Exception as e:
             logger.error(e)
 
@@ -129,3 +154,4 @@ if __name__ == "__main__":
     join.display()
     join.innerjoin()
     join.left_join()
+    join.right_join()
