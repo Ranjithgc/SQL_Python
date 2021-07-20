@@ -44,6 +44,24 @@ class Views:
         except Exception as e:
             logger.error(e)
 
+    def create_view(self):
+        '''
+        Description:
+            This function creates a view from the customers table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE RANJITH")
+            self.db_cursor.execute('''CREATE VIEW address AS
+                    SELECT NAME, ADDRESS, AGE FROM CUSTOMERS''')
+            logger.info("View created")
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     view = Views()
     view.print_connection()
+    view.create_view()
