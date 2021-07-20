@@ -174,6 +174,24 @@ class Joins:
         except Exception as e:
             logger.error(e)
 
+    def self_join(self):
+        '''
+        Description:
+            This function performs SELF JOIN.
+        Parameter:
+            it takes self as paramter.
+        '''
+        
+        try:
+            self.db_cursor.execute('''SELECT c1.ID, c1.NAME FROM CUSTOMERS AS c1, CUSTOMERS c2  
+                                    WHERE c1.ID = c2.ID''')
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     join = Joins()
@@ -183,3 +201,4 @@ if __name__ == "__main__":
     join.left_join()
     join.right_join()
     join.cross_join()
+    join.self_join()
