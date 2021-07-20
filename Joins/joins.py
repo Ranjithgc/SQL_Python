@@ -19,7 +19,7 @@ class Joins:
         '''
         Description:
             created constructor and test mysql database connection.
-        Parametter:
+        Parameter:
             it takes self as parameter.
         '''
         self.db_connection = mysql.connector.connect(
@@ -44,6 +44,33 @@ class Joins:
         except Exception as e:
             logger.error(e)
 
+    def display(self):
+        '''
+        Description:
+            This function Display the data of the table.
+        Parameter:
+            it takes self as parameter.
+        '''
+        try:
+            self.db_cursor.execute("USE RANJITH")
+            self.db_cursor.execute("SELECT *FROM CUSTOMERS")
+
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute("SELECT *FROM ORDERS")
+
+            result2 = self.db_cursor.fetchall()
+
+            for x1 in result2:
+                logger.info(x1)
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     join = Joins()
     join.print_connection()
+    join.display()
