@@ -23,10 +23,10 @@ class CrudOperation:
             it takes self as parameter.
         '''
         self.db_connection = mysql.connector.connect(
-            host=os.environ.get("host"),
-            user=os.environ.get("user"),
-            passwd=os.environ.get("passwd"),
-            auth_plugin=os.environ.get("auth_plugin")
+            host=os.getenv('host'),
+            user=os.getenv('user'),
+            passwd=os.getenv('passwd'),
+            auth_plugin=os.getenv('auth_plugin')
         )
         self.db_cursor = self.db_connection.cursor()
 
