@@ -96,8 +96,36 @@ class Joins:
         except Exception as e:
             logger.error(e)
 
+    def left_join(self):
+        '''
+        Description:
+            This function performs INNER JOIN.
+        Parameter:
+            it takes self as paramter.
+        '''
+        
+        try:
+            self.db_cursor.execute('''SELECT ORDERS.OID, CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    LEFT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID''')
+            result = self.db_cursor.fetchall()
+
+            for x in result:
+                logger.info(x)
+
+            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
+                                    LEFT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID WHERE AMOUNT>2500''')
+            result1 = self.db_cursor.fetchall()
+
+            for x1 in result1:
+                logger.info(x1)
+
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     join = Joins()
     join.print_connection()
     join.display()
     join.innerjoin()
+    join.left_join()
