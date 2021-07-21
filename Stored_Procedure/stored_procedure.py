@@ -61,8 +61,27 @@ class StoredProcedure:
 
         except Exception as e:
             logger.error(e)
+    
+    def with_parameter(self):
+        '''
+        Description:
+            This function calls already created stored procedure by passing parameter with IN parameter.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            args = [4]
+            result = self.db_cursor.callproc('limit_student', args)
+
+            for x in self.db_cursor.stored_results():
+                logger.info(x.fetchall())
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     store = StoredProcedure()
     store.print_connection()
     store.call_procedure()
+    store.with_parameter()
