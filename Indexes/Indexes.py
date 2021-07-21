@@ -94,9 +94,25 @@ class Indexes:
         except Exception as e:
             logger.error(e)
 
+    def drop_index(self):
+        '''
+        Description:
+            This function drops the index from table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("ALTER TABLE CUSTOMERS DROP INDEX salary")
+            logger.info("Index Dropped")
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     index = Indexes()
     index.print_connection()
     index.create_index()
     index.display_index()
     index.select()
+    index.drop_index()
