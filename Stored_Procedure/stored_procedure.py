@@ -96,6 +96,22 @@ class StoredProcedure:
         
         except Exception as e:
             logger.error(e)
+    
+    def with_INOUT_parameter(self):
+        '''
+        Description:
+            This function calls already created stored procedure by passing parameter with INOUT parameter.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            args = [3]
+            result = self.db_cursor.callproc('display_salary', args)
+            logger.info(result)
+
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     store = StoredProcedure()
@@ -103,3 +119,4 @@ if __name__ == "__main__":
     store.call_procedure()
     store.with_parameter()
     store.with_out_parameter()
+    store.with_INOUT_parameter()
