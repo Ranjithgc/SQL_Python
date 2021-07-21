@@ -44,6 +44,23 @@ class Indexes:
         except Exception as e:
             logger.error(e)
 
+    def create_index(self):
+        '''
+        Description:
+            This function creates a index.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE RANJITH")
+            self.db_cursor.execute("CREATE INDEX salary ON CUSTOMERS(ID, NAME, SALARY)")
+            logger.info("Index created")
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     index = Indexes()
     index.print_connection()
+    index.create_index()
