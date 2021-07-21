@@ -79,9 +79,27 @@ class StoredProcedure:
 
         except Exception as e:
             logger.error(e)
+    
+    def with_out_parameter(self):
+        '''
+        Description:
+            This function calls already created stored procedure by passing parameter with OUT parameter.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            args = ['maximum']
+            result = self.db_cursor.callproc('display_max_salary', args)
+
+            logger.info(result)
+        
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     store = StoredProcedure()
     store.print_connection()
     store.call_procedure()
     store.with_parameter()
+    store.with_out_parameter()
