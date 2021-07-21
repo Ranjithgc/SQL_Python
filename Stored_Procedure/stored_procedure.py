@@ -44,6 +44,25 @@ class StoredProcedure:
         except Exception as e:
             logger.error(e)
 
+    def call_procedure(self):
+        '''
+        Description:
+            This function calls already created stored procedure.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("USE ARUN")
+            self.db_cursor.callproc('select_all_students')
+
+            for result in self.db_cursor.stored_results():
+                logger.info(result.fetchall())
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     store = StoredProcedure()
     store.print_connection()
+    store.call_procedure()
