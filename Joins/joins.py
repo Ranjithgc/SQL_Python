@@ -138,8 +138,9 @@ class Joins:
             for x in result:
                 logger.info(x)
 
-            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, ORDERS.AMOUNT FROM CUSTOMERS 
-                                    RIGHT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID WHERE AMOUNT>2500 AND AMOUNT<5000''')
+            self.db_cursor.execute('''SELECT CUSTOMERS.NAME, SUM(AMOUNT) FROM CUSTOMERS 
+                                    RIGHT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID 
+                                    GROUP BY CUSTOMERS.NAME HAVING SUM(AMOUNT) >= 2500 ''')
             result1 = self.db_cursor.fetchall()
 
             for x1 in result1:
