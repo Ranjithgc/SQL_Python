@@ -113,6 +113,22 @@ class StoredProcedure:
         except Exception as e:
             logger.error(e)
 
+    def drop_procedure(self):
+        '''
+        Description:
+            This function drops a procedure.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+
+            self.db_cursor.execute("DROP PROCEDURE display_salary")
+            logger.info("Procedure dropped")
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     store = StoredProcedure()
     store.print_connection()
@@ -120,3 +136,4 @@ if __name__ == "__main__":
     store.with_parameter()
     store.with_out_parameter()
     store.with_INOUT_parameter()
+    store.drop_procedure()
