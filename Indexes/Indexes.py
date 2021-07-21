@@ -76,9 +76,27 @@ class Indexes:
 
         except Exception as e:
             logger.error(e)
+    
+    def select(self):
+        '''
+        Description:
+            This function select and dispalys records salary greater than 20000 by index.
+        Parameter:
+            it takes self as parameter. 
+        '''
+
+        try:
+            self.db_cursor.execute("EXPLAIN SELECT ID, NAME, SALARY FROM CUSTOMERS WHERE SALARY >= 20000")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+        except Exception as e:
+            logger.error(e)
 
 if __name__ == "__main__":
     index = Indexes()
     index.print_connection()
     index.create_index()
     index.display_index()
+    index.select()
