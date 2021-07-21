@@ -60,7 +60,25 @@ class Indexes:
         except Exception as e:
             logger.error(e)
 
+    def display_index(self):
+        '''
+        Description:
+            This function shows the index on table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SHOW INDEX FROM CUSTOMERS")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     index = Indexes()
     index.print_connection()
     index.create_index()
+    index.display_index()
