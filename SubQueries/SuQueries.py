@@ -67,13 +67,20 @@ class SubQuery:
             for x in result:
                 logger.info(x)
 
+            self.db_cursor.execute('''SELECT NAME, ADDRESS, SALARY FROM CUSTOMERS C 
+                                      WHERE SALARY > (SELECT AVG(SALARY) FROM CUSTOMERS 
+                                      WHERE ADDRESS = C.ADDRESS) ''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+
         except Exception as e:
             logger.error(e)
 
     def not_in_operator(self):
         '''
         Description:
-            This function returns employee detail who does not belong to the city.
+            This function returns customer detail who does not belong to the city.
         Parameter:
             it takes self as parameter.
         '''
@@ -88,8 +95,33 @@ class SubQuery:
         except Exception as e:
             logger.error(e)
 
+    def exists_notexists(self):
+        '''
+        Description:
+            This function returns customers details that exists and not exists in both table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute('''SELECT NAME, AGE FROM CUSTOMERS C WHERE EXISTS 
+                                      (SELECT *FROM ORDERS O WHERE C.ID = O.CUSTOMER_ID)''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+            self.db_cursor.execute('''SELECT NAME, AGE FROM CUSTOMERS C WHERE EXISTS 
+                                      (SELECT *FROM ORDERS O WHERE C.ID = O.CUSTOMER_ID)''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x) 
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     query = SubQuery()
     query.print_connection()
     query.comparison_operator()
     query.not_in_operator()
+    query.exists_notexists()
