@@ -70,7 +70,26 @@ class SubQuery:
         except Exception as e:
             logger.error(e)
 
+    def not_in_operator(self):
+        '''
+        Description:
+            This function returns employee detail who does not belong to the city.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute('''SELECT NAME, ADDRESS FROM CUSTOMERS WHERE ADDRESS NOT IN(
+                                      SELECT ADDRESS FROM CUSTOMERS WHERE ADDRESS = 'UK')''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     query = SubQuery()
     query.print_connection()
     query.comparison_operator()
+    query.not_in_operator()
