@@ -60,6 +60,12 @@ class SubQuery:
             result = self.db_cursor.fetchall()
             for x in result:
                 logger.info(x)
+            
+            self.db_cursor.execute('''SELECT NAME, ADDRESS, SALARY FROM CUSTOMERS WHERE 
+                                      SALARY = (SELECT MAX(SALARY) FROM CUSTOMERS)''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
 
         except Exception as e:
             logger.error(e)
