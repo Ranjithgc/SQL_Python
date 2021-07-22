@@ -2,8 +2,8 @@
 @Author: Ranjith G C
 @Date: 2021-07-21
 @Last Modified by: Ranjith G C
-@Last Modified time: 2021-07-21 
-@Title : Program Aim is to work with Indexes.
+@Last Modified time: 2021-07-22 
+@Title : Program Aim is to work with Stored Procedures.
 """
 
 import os
@@ -40,9 +40,47 @@ class StoredProcedure:
         
         try:
             logger.info(self.db_connection)
+            self.db_cursor.execute("USE ARUN")
         
         except Exception as e:
             logger.error(e)
+
+    def create_procedures(self):
+        '''
+        Description:
+            This function creates procedure.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute('''CREATE PROCEDURE select_all_students()
+                                    BEGIN
+                                    SELECT *FROM student;
+                                    END''')
+            logger.info("procedure created")
+
+            self.db_cursor.execute('''CREATE PROCEDURE limit_student(IN var1 INT)
+                                    BEGIN
+                                    SELECT *FROM student LIMIT var1;
+                                    END''')
+            logger.info("procedure with in parameter created")
+
+            self.db_cursor.execute('''CREATE PROCEDURE display_max_salary(OUT var1 INT)
+                                    BEGIN
+                                    SELECT MAX(salary) INTO var1 FROM employee;
+                                    END''')
+            logger.info("procedure with out parameter created")
+
+            self.db_cursor.execute('''CREATE PROCEDURE display_salary(INOUT var1 INT)
+                                    BEGIN
+                                    SELECT salary INTO var1 FROM employee WHERE ID = 3;
+                                    END''')
+            logger.info("procedure with inout parameter created")
+ 
+        
+        except Exception as e:
+            logger.error()
 
     def call_procedure(self):
         '''
@@ -53,7 +91,6 @@ class StoredProcedure:
         '''
 
         try:
-            self.db_cursor.execute("USE ARUN")
             self.db_cursor.callproc('select_all_students')
 
             for result in self.db_cursor.stored_results():
@@ -122,7 +159,9 @@ class StoredProcedure:
         '''
 
         try:
-
+            self.db_cursor.execute("DROP PROCEDURE select_all_students")
+            self.db_cursor.execute("DROP PROCEDURE limit_student")
+            self.db_cursor.execute("DROP PROCEDURE display_max_salary")
             self.db_cursor.execute("DROP PROCEDURE display_salary")
             logger.info("Procedure dropped")
 
@@ -132,6 +171,7 @@ class StoredProcedure:
 if __name__ == "__main__":
     store = StoredProcedure()
     store.print_connection()
+    store.create_procedures()
     store.call_procedure()
     store.with_parameter()
     store.with_out_parameter()
