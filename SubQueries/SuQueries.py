@@ -40,11 +40,31 @@ class SubQuery:
         
         try:
             logger.info(self.db_connection)
-            self.db_cursor.execute("USE ARUN")
+            self.db_cursor.execute("USE RANJITH")
         
+        except Exception as e:
+            logger.error(e)
+    
+    def comparison_operator(self):
+        '''
+        Description:
+            This function returns employee detail whose income is more than 15000 with the help of subquery.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute('''SELECT *FROM CUSTOMERS WHERE ID 
+                                      IN(SELECT ID FROM CUSTOMERS WHERE 
+                                      SALARY > 15000)''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+
         except Exception as e:
             logger.error(e)
 
 if __name__ == "__main__":
     query = SubQuery()
     query.print_connection()
+    query.comparison_operator()
