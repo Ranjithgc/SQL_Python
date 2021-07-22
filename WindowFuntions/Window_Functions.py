@@ -91,9 +91,35 @@ class WindowFunctions:
         except Exception as e:
             logger.error(e)
 
-    
+    def ranking_function(self):
+        '''
+        Description:
+            This function implemented group by for ranking functions.
+        Parameter:
+            it takes self as parametr.
+        '''
+
+        try:
+            self.db_cursor.execute('''SELECT Year, Product, Sale,   
+                                    RANK() OVER() AS Total_Sales_rank  
+                                    FROM Sales;''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+            self.db_cursor.execute('''SELECT Year, Product, Sale, DENSE_RANK() 
+                                    OVER(ORDER BY Year) AS Total_Sales_dense_rank   
+                                    FROM Sales;''')
+            result1 = self.db_cursor.fetchall()
+            for x in result1:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     window = WindowFunctions()
     window.print_connection()
     window.partition_by()
     window.analytical_function()
+    window.ranking_function()
