@@ -110,8 +110,30 @@ class SubQuery:
             for x in result:
                 logger.info(x)
             
-            self.db_cursor.execute('''SELECT NAME, AGE FROM CUSTOMERS C WHERE EXISTS 
+            self.db_cursor.execute('''SELECT NAME, AGE FROM CUSTOMERS C WHERE NOT EXISTS 
                                       (SELECT *FROM ORDERS O WHERE C.ID = O.CUSTOMER_ID)''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x) 
+        
+        except Exception as e:
+            logger.error(e)
+    
+    def any_all(self):
+        '''
+        Description:
+            This function returns customers details that exists and not exists in both table.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("SELECT ID, NAME FROM CUSTOMERS WHERE ID > ANY (SELECT CUSTOMER_ID FROM ORDERS)")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+            
+            self.db_cursor.execute("SELECT ID, NAME FROM CUSTOMERS WHERE ID > ALL (SELECT CUSTOMER_ID FROM ORDERS)")
             result = self.db_cursor.fetchall()
             for x in result:
                 logger.info(x) 
@@ -125,3 +147,4 @@ if __name__ == "__main__":
     query.comparison_operator()
     query.not_in_operator()
     query.exists_notexists()
+    query.any_all()
