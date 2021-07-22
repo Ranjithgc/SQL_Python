@@ -45,6 +45,26 @@ class WindowFunctions:
         except Exception as e:
             logger.error(e)
 
+    def group_by(self):
+        '''
+        Description:
+            This function implemented group by for window functions.
+        Parameter:
+            it takes self as parametr.
+        '''
+
+        try:
+            self.db_cursor.execute("USE ARUN")
+            self.db_cursor.execute('''SELECT Year, SUM(Sale) AS Total_Sales FROM Sales  
+                                    GROUP BY Year''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     window = WindowFunctions()
     window.print_connection()
+    window.group_by()
