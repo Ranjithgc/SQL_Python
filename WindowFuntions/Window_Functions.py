@@ -56,8 +56,8 @@ class WindowFunctions:
         try:
             self.db_cursor.execute("USE ARUN")
             self.db_cursor.execute('''SELECT Year, Product, Sale, SUM(Sale) 
-                                      OVER ( PARTITION BY Year ORDER BY Product) 
-                                      AS Total_Sales FROM Sales;''')
+                                    OVER ( PARTITION BY Year ORDER BY Product) 
+                                    AS Total_Sales FROM Sales;''')
             result = self.db_cursor.fetchall()
             for x in result:
                 logger.info(x)
@@ -65,7 +65,35 @@ class WindowFunctions:
         except Exception as e:
             logger.error(e)
 
+    def analytical_function(self):
+        '''
+        Description:
+            This function implemented group by for analytical functions.
+        Parameter:
+            it takes self as parametr.
+        '''
+
+        try:
+            self.db_cursor.execute('''SELECT Year, Product, Sale,   
+                                    NTile(4) OVER() AS Total_Sales   
+                                    FROM Sales;''')
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+            self.db_cursor.execute('''SELECT Year, Product, Sale, LEAD(Sale,1) 
+                                    OVER(ORDER BY Year) AS Total_Sales   
+                                    FROM Sales;''')
+            result1 = self.db_cursor.fetchall()
+            for x in result1:
+                logger.info(x)
+
+        except Exception as e:
+            logger.error(e)
+
+    
 if __name__ == "__main__":
     window = WindowFunctions()
     window.print_connection()
     window.partition_by()
+    window.analytical_function()
