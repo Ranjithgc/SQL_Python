@@ -45,7 +45,7 @@ class WindowFunctions:
         except Exception as e:
             logger.error(e)
 
-    def group_by(self):
+    def partition_by(self):
         '''
         Description:
             This function implemented group by for window functions.
@@ -55,8 +55,9 @@ class WindowFunctions:
 
         try:
             self.db_cursor.execute("USE ARUN")
-            self.db_cursor.execute('''SELECT Year, SUM(Sale) AS Total_Sales FROM Sales  
-                                    GROUP BY Year''')
+            self.db_cursor.execute('''SELECT Year, Product, Sale, SUM(Sale) 
+                                      OVER ( PARTITION BY Year ORDER BY Product) 
+                                      AS Total_Sales FROM Sales;''')
             result = self.db_cursor.fetchall()
             for x in result:
                 logger.info(x)
@@ -67,4 +68,4 @@ class WindowFunctions:
 if __name__ == "__main__":
     window = WindowFunctions()
     window.print_connection()
-    window.group_by()
+    window.partition_by()
