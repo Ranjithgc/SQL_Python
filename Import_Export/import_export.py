@@ -3,7 +3,7 @@
 @Date: 2021-07-23
 @Last Modified by: Ranjith G C
 @Last Modified time: 2021-07-23 
-@Title : Program Aim is to work with Subqueries.
+@Title : Program Aim is to Export and Import a database.
 """
 
 import os
@@ -59,7 +59,28 @@ class ImportExport:
         except Exception as e:
             logger.error()
 
+    def import_db(self):
+        '''
+        Description:
+            This function is used import database.
+        Parameter:
+            it takes self as parameter.
+        '''
+
+        try:
+            self.db_cursor.execute("CREATE DATABASE RANJITH123")
+            logger.info("Database Created")
+            os.system('mysql -u root -p RANJITH123 < data-dump.sql')
+            self.db_cursor.execute("SHOW DATABASES")
+            result = self.db_cursor.fetchall()
+            for x in result:
+                logger.info(x)
+        
+        except Exception as e:
+            logger.error(e)
+
 if __name__ == "__main__":
     imp = ImportExport()
     imp.print_connection()
     imp.export()
+    imp.import_db()
